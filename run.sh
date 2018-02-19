@@ -35,10 +35,14 @@ if [[ $rc -eq 105 ]];then
   echo "[INFO] `date '+%Y-%m-%d %H:%M:%S'` MASTER_IP: $MASTER_IP"
   if [[ "$MASTER_IP" == "\"$EP\"" ]];then
     echo "[INFO] `date '+%Y-%m-%d %H:%M:%S'` keep jenkins start"
+    service jenkins start
     refresh_ttl
   else
     echo "[INFO] `date '+%Y-%m-%d %H:%M:%S'` service jenkins stop"
+    service jenkins stop
     echo "[INFO] `date '+%Y-%m-%d %H:%M:%S'` sync data from $MASTER_IP"
+    rsync -a ${MASTER_IP//\"/}::jenkins/var/lib/jenkins /var/lib/
+    echo "[INFO] `date '+%Y-%m-%d %H:%M:%S'` data sync done"
   fi
 elif [[ "$rc" == "null" ]];then
   echo "[INFO] `date '+%Y-%m-%d %H:%M:%S'` register success"
