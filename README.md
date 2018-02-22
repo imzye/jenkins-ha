@@ -5,4 +5,5 @@
 - jq
 - etcd cluster
 - jenkins
-- rsync
+- rsync service
+- haproxy/elb
